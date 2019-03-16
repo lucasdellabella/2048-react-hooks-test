@@ -17,6 +17,11 @@ const initialGameState = {
   upPressed: false
 };
 
+// For each row n in the grid, return a new row of each row's nth element
+function transpose(grid) {
+  return grid.map((_, rowIndex) => grid.map((row, _) => row[rowIndex]));
+}
+
 const shiftRowLeft = row => {
   const numbers = row.filter(boxVal => boxVal !== 0);
   const zeroes = row.filter(boxVal => boxVal === 0);
@@ -29,17 +34,31 @@ const shiftRowRight = row => {
   return zeroes.concat(numbers);
 };
 
-const handleKeyPress = (e, gameState) => {};
+const shiftRowUp = grid => {
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {}
+  }
+
+  const numbers = row.filter(boxVal => boxVal !== 0);
+  const zeroes = row.filter(boxVal => boxVal === 0);
+  return numbers.concat(zeroes);
+};
+
+const shiftRowDown = row => {
+  const numbers = row.filter(boxVal => boxVal !== 0);
+  const zeroes = row.filter(boxVal => boxVal === 0);
+  return zeroes.concat(numbers);
+};
 
 const ParentController = () => {
   const [gameState, setGameState] = useState(initialGameState);
 
   useEffect(() => {
-    document.addEventListener("keydown", moveBoxes);
-    return () => window.removeEventListener("keydown", moveBoxes);
+    document.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, []);
 
-  const moveBoxes = e => {
+  const handleKeyPress = e => {
     switch (e.keyCode) {
       case ARROW_LEFT:
         setGameState({
@@ -52,8 +71,16 @@ const ParentController = () => {
         });
         break;
       case ARROW_UP:
+        setGameState({
+          gridState: transpose(transpose(gameState.gridState).map(shiftRowLeft))
+        });
         break;
       case ARROW_DOWN:
+        setGameState({
+          gridState: transpose(
+            transpose(gameState.gridState).map(shiftRowRight)
+          )
+        });
         break;
       default:
         break;
