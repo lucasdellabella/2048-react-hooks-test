@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import {
+  shiftRowLeft,
+  shiftRowRight,
+  shiftRowUp,
+  shiftRowDown,
+  transpose
+} from "./move-box-helpers";
 
 import "./styles.css";
 
@@ -10,40 +17,7 @@ const ARROW_DOWN = 40;
 const GRID_SIZE = 4;
 
 const initialGameState = {
-  gridState: [[0, 2, 8, 4], [2, 0, 0, 32], [0, 16, 0, 2], [32, 0, 2, 0]],
-  leftPressed: false,
-  rightPressed: false,
-  downPressed: false,
-  upPressed: false
-};
-
-// For each row n in the grid, return a new row of each row's nth element
-function transpose(grid) {
-  return grid.map((_, rowIndex) => grid.map((row, _) => row[rowIndex]));
-}
-
-const shiftRowLeft = row => {
-  const numbers = row.filter(boxVal => boxVal !== 0);
-  const zeroes = row.filter(boxVal => boxVal === 0);
-  return numbers.concat(zeroes);
-};
-
-const shiftRowRight = row => {
-  const numbers = row.filter(boxVal => boxVal !== 0);
-  const zeroes = row.filter(boxVal => boxVal === 0);
-  return zeroes.concat(numbers);
-};
-
-const shiftRowUp = row => {
-  const numbers = row.filter(boxVal => boxVal !== 0);
-  const zeroes = row.filter(boxVal => boxVal === 0);
-  return numbers.concat(zeroes);
-};
-
-const shiftRowDown = row => {
-  const numbers = row.filter(boxVal => boxVal !== 0);
-  const zeroes = row.filter(boxVal => boxVal === 0);
-  return zeroes.concat(numbers);
+  gridState: [[0, 2, 8, 4], [2, 0, 0, 32], [0, 16, 0, 2], [32, 0, 2, 0]]
 };
 
 const ParentController = () => {
@@ -54,29 +28,31 @@ const ParentController = () => {
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, []);
 
-  const handleKeyPress = e => {
+  let handleKeyPress = e => {
     switch (e.keyCode) {
       case ARROW_LEFT:
-        setGameState({
-          gridState: gameState.gridState.map(shiftRowLeft)
-        });
+        setGameState(previousState => ({
+          gridState: previousState.gridState.map(shiftRowLeft)
+        }));
         break;
       case ARROW_RIGHT:
-        setGameState({
-          gridState: gameState.gridState.map(shiftRowRight)
-        });
+        setGameState(previousState => ({
+          gridState: previousState.gridState.map(shiftRowRight)
+        }));
         break;
       case ARROW_UP:
-        setGameState({
-          gridState: transpose(transpose(gameState.gridState).map(shiftRowLeft))
-        });
+        setGameState(previousState => ({
+          gridState: transpose(
+            transpose(previousState.gridState).map(shiftRowLeft)
+          )
+        }));
         break;
       case ARROW_DOWN:
-        setGameState({
+        setGameState(previousState => ({
           gridState: transpose(
-            transpose(gameState.gridState).map(shiftRowRight)
+            transpose(previousState.gridState).map(shiftRowRight)
           )
-        });
+        }));
         break;
       default:
         break;
