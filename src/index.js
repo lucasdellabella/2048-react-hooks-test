@@ -34,7 +34,7 @@ const shiftRowRight = row => {
   return zeroes.concat(numbers);
 };
 
-const shiftRowUp = grid => {
+const shiftRowUp = row => {
   const numbers = row.filter(boxVal => boxVal !== 0);
   const zeroes = row.filter(boxVal => boxVal === 0);
   return numbers.concat(zeroes);
