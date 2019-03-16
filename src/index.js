@@ -35,10 +35,6 @@ const shiftRowRight = row => {
 };
 
 const shiftRowUp = grid => {
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) {}
-  }
-
   const numbers = row.filter(boxVal => boxVal !== 0);
   const zeroes = row.filter(boxVal => boxVal === 0);
   return numbers.concat(zeroes);
