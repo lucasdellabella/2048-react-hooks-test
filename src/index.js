@@ -17,7 +17,7 @@ const ARROW_DOWN = 40;
 const GRID_SIZE = 4;
 
 const initialGameState = {
-  gridState: [[0, 2, 8, 4], [2, 0, 0, 32], [0, 16, 0, 2], [32, 0, 2, 0]]
+  gridState: [[8, 2, 8, 4], [2, 4, 0, 32], [0, 16, 0, 2], [32, 4, 2, 0]]
 };
 
 const ParentController = () => {

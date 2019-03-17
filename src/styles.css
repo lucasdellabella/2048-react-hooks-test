@@ -5,6 +5,7 @@
   height: 100px;
   line-height: 100px;
   border-radius: 3px;
+  font-size: 24px;
 }
 
 .empty-box {
@@ -18,18 +19,19 @@
 
 .row {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: row;
 }
 
 .grid {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: column;
   background-color: #b0bea8;
   border-radius: 5px;
-  width: 500px;
-  height: 500px;
+  width: 460px;
+  height: 460px;
+  padding: 20px;
 }
 
 .color-2 {
