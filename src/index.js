@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import Grid from "./Grid";
 import {
   shiftRowLeft,
   shiftRowRight,
@@ -65,30 +66,6 @@ const ParentController = () => {
     </div>
   );
 };
-
-const Grid = ({ gridState }) => (
-  <div className={"grid"}>
-    {gridState.map(rowValues => (
-      <Row rowValues={rowValues} />
-    ))}
-  </div>
-);
-
-const Row = ({ rowValues }) => (
-  <div className={"row"}>
-    {rowValues.map(boxValue =>
-      boxValue > 0 ? <LilBox value={boxValue} /> : <EmptyBox />
-    )}
-  </div>
-);
-
-const LilBox = ({ value }) => (
-  <div className={`lil-box ${boxColor(value)}`}>{value}</div>
-);
-
-const EmptyBox = () => <div className={"empty-box"} />;
-
-const boxColor = boxValue => `color-${boxValue}`;
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<ParentController />, rootElement);

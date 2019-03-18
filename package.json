@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "bounce.js": "0.8.2",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-scripts": "2.0.3"
