@@ -17,12 +17,29 @@ const ARROW_RIGHT = 39;
 const ARROW_DOWN = 40;
 const GRID_SIZE = 4;
 
+const multiplesOfTwo = [0, 2, 4, 8, 16, 32];
+const genRandomMultOfTwo = () =>
+  multiplesOfTwo[Math.floor(Math.random() * multiplesOfTwo.length)];
+const randomGameState = size => {
+  const grid = [];
+  for (let i = 0; i < size; i++) {
+    const row = [];
+    for (let j = 0; j < size; j++) {
+      row.push(genRandomMultOfTwo());
+    }
+    grid.push(row);
+  }
+  return grid;
+};
+
 const initialGameState = {
   gridState: [[8, 2, 8, 4], [2, 4, 0, 32], [0, 16, 0, 2], [32, 4, 2, 0]]
 };
 
 const ParentController = () => {
-  const [gameState, setGameState] = useState(initialGameState);
+  const [gameState, setGameState] = useState({
+    gridState: randomGameState(GRID_SIZE)
+  });
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
@@ -69,19 +86,3 @@ const ParentController = () => {
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<ParentController />, rootElement);
-
-// new 2 pops up every time
-// 4x4 empty spaces
-
-const generateGrid = size => {
-  const values = [0, 2, 4, 8, 16, 32];
-  const grid = [];
-  for (let i = 0; i < size; i++) {
-    const row = [];
-    for (let j = 0; j < size; j++) {
-      row.push(values[Math.floor(Math.random() * values.length)]);
-    }
-    grid.push(row);
-  }
-  return grid;
-};
